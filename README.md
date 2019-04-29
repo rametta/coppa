@@ -29,4 +29,7 @@ npm i -g coppa
 
 Here are all the available flags. Can also be viewed in your command line by typing `coppa --help`
 
-*Coming soon...*
+- `-c, --config [path]` Path to serverless config file (default: ./serverless.yml)
+- `-e, --entry [path]` Path to JS entry point file (default: ./index.js)
+- `-s, --stage [stage]` Stage to be used
+- `-p, --port [port]` Port for server to use (default: 8080)

@@ -10,8 +10,8 @@ const pratica = require('pratica')
 
 program
   .version('1.0.0')
-  .option('-c, --config [path]', 'Path to serverless config file')
-  .option('-e, --entry [path]', 'Path to JS entry point file')
+  .option('-c, --config [path]', 'Path to serverless config file (default: ./serverless.yml)')
+  .option('-e, --entry [path]', 'Path to JS entry point file (default: ./index.js)')
   .option('-s, --stage [stage]', 'Stage to be used')
   .option('-p, --port [port]', 'Port for server to use (default: 8080)')
   .parse(process.argv)
