@@ -1,0 +1,25 @@
+{
+  "name": "coppa",
+  "version": "1.0.0",
+  "description": "A CLI tool for local development of google cloud functions",
+  "main": "src/index.js",
+  "author": "Jason Rametta <rametta@outlook.com>",
+  "license": "apache-2.0",
+  "repository": "https://github.com/rametta/coppa.git",
+  "bugs": {
+    "url": "https://github.com/rametta/coppa/issues"
+  },
+  "homepage": "https://github.com/rametta/coppa#readme",
+  "dependencies": {
+    "commander": "^2.20.0"
+  },
+  "keywords": [
+    "CLI",
+    "google cloud functions",
+    "gcf",
+    "local development",
+    "lightweight",
+    "express",
+    "node"
+  ]
+}
