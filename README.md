@@ -1,4 +1,6 @@
 [![npm](https://img.shields.io/npm/v/coppa.svg)](http://npm.im/coppa)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](http://makeapullrequest.com)
 
 # 🏇 Coppa
 
@@ -28,12 +30,29 @@ npm i -g coppa
 
 ## Usage
 
-- `cd` into your app directory that contains your `serverless.yml` file and your main `index.js` file that holds all your cloud functions.
-- In this directory, execute `coppa start` in the command line to start the dev server. It will default to reading the `serverless.yml` file in the current working directory or you can point to your own with the `-c` flag `coppa start -c src/serverless.yml`
+`cd` into your app directory that contains your `serverless.yml` file and your main `index.js` file that holds all your cloud functions, then run:
+
+```sh
+coppa start
+```
+
+This command will start the dev server using the default arguments for locating files, which is `./serverless.yml` for the serverless yaml, and `./index.js` for the main entry point.
+
+These can be changed by passing in flags to Coppa. To see all the flags, run:
+
+```sh
+coppa start --help
+```
+
+To use any flag, include it in the command:
+
+```sh
+coppa start -c path/to/serverless.yml -p 9001
+```
 
 ## Flags
 
-Here are all the available flags. Can also be viewed in your command line by typing `coppa --help`
+Here are all the available flags for the `start` command.
 
 - `-c, --config [path]` Path to serverless config file (default: ./serverless.yml)
 - `-e, --entry [path]` Path to JS entry point file (default: ./index.js)
