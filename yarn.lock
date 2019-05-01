@@ -298,6 +298,11 @@ ms@2.0.0:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
   integrity sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=
 
+mustache@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-3.0.1.tgz#873855f23aa8a95b150fb96d9836edbc5a1d248a"
+  integrity sha512-jFI/4UVRsRYdUbuDTKT7KzfOp7FiD5WzYmmwNwXyUVypC0xjoTL78Fqc0jHUPIvvGD+6DQSPHIt1NE7D1ArsqA==
+
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
@@ -347,6 +352,13 @@ qs@6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
+
+quantor@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/quantor/-/quantor-2.1.5.tgz#c350fd4a61a339e58a4c52ee2dd7b30dcc1d9a9a"
+  integrity sha512-ULkABINqwtbiLX0RPkFF3tHcPTx4m3R9N8N0/7oogeeiQYonLEy0NgbWEdPsAQ3vRMFOQ4ZAMcAWMxyXpzYiAw==
+  dependencies:
+    mustache "^3.0.0"
 
 range-parser@~1.2.0:
   version "1.2.0"

@@ -6,60 +6,56 @@ const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const yaml = require('js-yaml')
+const quantor = require('quantor')
 const { Ok, Err, encaseRes } = require('pratica')
 
-// readServerlessYaml :: String -> Result
-const readServerlessYaml = path =>
+const readServerlessYaml = (path, stage) =>
   encaseRes(() => yaml.safeLoad(fs.readFileSync(path, 'utf8')))
     .mapErr(() => `Error reading yaml file: ${path}`)
-    .chain(yml => yml.functions ? Ok(yml.functions) : Err(`No functions declared in yaml file: ${config}`))
-    .map(funcsMap => Object.keys(funcsMap).map(key => ({ name: `/${key}`, handler: funcsMap[key].handler })))
+    .chain(yml => yml.functions ? Ok(yml) : Err(`No functions declared in yaml file: ${config}`))
+    .map(({ functions, service }) => Object.keys(functions).map(key => ({
+      name: stage ? `/${service}-${stage}-${key}` : `/${service}-${key}`,
+      display: functions[key].name,
+      description: functions[key].description,
+      handler: functions[key].handler
+    })))
 
-// readFunctionsJs :: String -> Result
 const readFunctionsJs = path =>
   encaseRes(() => require(path))
     .mapErr(() => `Could not read main functions module: ${path}`)
 
-// sanitizeFuncs :: Handler -> Func[]
 const sanitizeFuncs = ({ handlers, funcsMod }) => handlers
-  .map(({ name, handler }) => ({ name, handler: funcsMod[handler] }))
+  .map(({ name, display, description, handler }) => ({ name, display, description, handler: funcsMod[handler] }))
   .filter(({ handler }) => !!handler)
 
-// createHome :: (ExpressApp, Func[]) -> IO
-const createHome = (app, funcs) =>
-  app.get('/', (req, res) => res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Coppa</title>
-      </head>
-      <body>
-        <ul>
-          ${funcs.map(({ name }) => `<li><a href="${name}">${name}</a></li>`).join('')}
-        </ul>
-      </body>
-    </html>
-  `))
-
-// createServer :: Number -> Func[] -> IO
 const createServer = port => funcs => {
   const app = express()
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
   app.use(morgan('dev'))
+
   funcs.map(({ name, handler }) => console.log(name) || app.all(name, handler))
-  createHome(app, funcs)
+
+  app.get('/', (req, res) => quantor({
+    title: 'Coppa Server',
+    endpoints: funcs.map(({ name, display, description }) => ({
+      name,
+      description: description || 'No description provided...',
+      display: display || 'No name provided...',
+      handlers: { GET: {}, POST: {}, PUT: {}, DELETE: {} }
+    }))
+  })(html => res.send(html)))
+
   app.listen(port, () => console.log(`Coppa listening on port ${port}!`))
 }
 
-// start :: Options -> IO
 const start = opts => {
   const port = opts.port || 8080
   const config = opts.config || './serverless.yml'
   const entry = opts.entry || './index.js'
   const stage = opts.stage
 
-  readServerlessYaml(config)
+  readServerlessYaml(config, stage)
     .chain(handlers => readFunctionsJs(entry).map(funcsMod => ({ handlers, funcsMod })))
     .map(sanitizeFuncs)
     .cata({

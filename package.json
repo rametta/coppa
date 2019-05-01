@@ -17,7 +17,8 @@
     "express": "^4.16.4",
     "js-yaml": "^3.13.1",
     "morgan": "^1.9.1",
-    "pratica": "^1.4.16"
+    "pratica": "^1.4.16",
+    "quantor": "^2.1.5"
   },
   "keywords": [
     "CLI",
