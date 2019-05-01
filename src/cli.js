@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
+const path = require('path')
 const program = require('commander')
 const express = require('express')
 const morgan = require('morgan')
@@ -9,9 +10,9 @@ const yaml = require('js-yaml')
 const quantor = require('quantor')
 const { Ok, Err, encaseRes } = require('pratica')
 
-const readServerlessYaml = (path, stage) =>
-  encaseRes(() => yaml.safeLoad(fs.readFileSync(path, 'utf8')))
-    .mapErr(() => `Error reading yaml file: ${path}`)
+const readServerlessYaml = (filePath, stage) =>
+  encaseRes(() => yaml.safeLoad(fs.readFileSync(filePath, 'utf8')))
+    .mapErr(() => `Error reading yaml file: ${filePath}`)
     .chain(yml => yml.functions ? Ok(yml) : Err(`No functions declared in yaml file: ${config}`))
     .map(({ functions, service }) => Object.keys(functions).map(key => ({
       name: stage ? `/${service}-${stage}-${key}` : `/${service}-${key}`,
@@ -20,9 +21,9 @@ const readServerlessYaml = (path, stage) =>
       handler: functions[key].handler
     })))
 
-const readFunctionsJs = path =>
-  encaseRes(() => require(path))
-    .mapErr(() => `Could not read main functions module: ${path}`)
+const readFunctionsJs = filePath =>
+  encaseRes(() => require(path.resolve(filePath)))
+    .mapErr(() => `Could not read main functions module: ${filePath}`)
 
 const sanitizeFuncs = ({ handlers, funcsMod }) => handlers
   .map(({ name, display, description, handler }) => ({ name, display, description, handler: funcsMod[handler] }))
