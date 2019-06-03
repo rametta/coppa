@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs')
+const cors = require('cors')
 const path = require('path')
 const program = require('commander')
 const express = require('express')
@@ -34,6 +35,7 @@ const createServer = port => funcs => {
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
   app.use(morgan('dev'))
+  app.use(cors())
 
   funcs.map(({ name, handler }) => console.log(name) || app.all(name, handler))
 

@@ -50,6 +50,12 @@ To use any flag, include it in the command:
 coppa start -c path/to/serverless.yml -p 9001
 ```
 
+Hot reloading with nodemon
+
+```sh
+nodemon --exec coppa start
+```
+
 ## Flags
 
 Here are all the available flags for the `start` command.

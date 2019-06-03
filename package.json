@@ -1,11 +1,15 @@
 {
   "name": "coppa",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "🏇 A CLI tool for local development of google cloud functions",
   "main": "src/cli.js",
   "author": "Jason Rametta <rametta@outlook.com>",
   "license": "apache-2.0",
   "bin": "./src/cli.js",
+  "scripts": {
+    "dev": "node src/cli.js start -c ./serverlessSample.yml -e ./indexSample.js -w ./",
+    "dev-debug": "node --inspect-brk=5858 src/cli.js start -c ./serverlessSample.yml -e ./indexSample.js -w ./"
+  },
   "repository": "https://github.com/rametta/coppa.git",
   "bugs": {
     "url": "https://github.com/rametta/coppa/issues"
@@ -14,10 +18,11 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "commander": "^2.20.0",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "js-yaml": "^3.13.1",
     "morgan": "^1.9.1",
-    "pratica": "^1.4.16",
+    "pratica": "^1.4.18",
     "quantor": "^2.1.5"
   },
   "keywords": [
