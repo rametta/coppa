@@ -1,6 +1,6 @@
 {
   "name": "coppa",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "🏇 A CLI tool for local development of google cloud functions",
   "main": "src/cli.js",
   "author": "Jason Rametta <rametta@outlook.com>",

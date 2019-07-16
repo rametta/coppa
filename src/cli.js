@@ -13,7 +13,7 @@ const { Ok, Err, encaseRes } = require('pratica')
 
 const readServerlessYaml = (filePath, stage) =>
   encaseRes(() => yaml.safeLoad(fs.readFileSync(filePath, 'utf8')))
-    .mapErr(() => `Error reading yaml file: ${filePath}`)
+    .mapErr(err => `Error reading yaml file: ${filePath}, \nError: ${err}`)
     .chain(yml => yml.functions ? Ok(yml) : Err(`No functions declared in yaml file: ${config}`))
     .map(({ functions, service }) => Object.keys(functions).map(key => ({
       name: stage ? `/${service}-${stage}-${key}` : `/${service}-${key}`,
@@ -24,7 +24,7 @@ const readServerlessYaml = (filePath, stage) =>
 
 const readFunctionsJs = filePath =>
   encaseRes(() => require(path.resolve(filePath)))
-    .mapErr(() => `Could not read main functions module: ${filePath}`)
+    .mapErr(err => `Could not read main functions module: ${filePath}, \nError: ${err}`)
 
 const sanitizeFuncs = ({ handlers, funcsMod }) => handlers
   .map(({ name, display, description, handler }) => ({ name, display, description, handler: funcsMod[handler] }))
