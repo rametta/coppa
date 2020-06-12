@@ -37,7 +37,7 @@ const createServer = port => funcs => {
   app.use(morgan('dev'))
   app.use(cors())
 
-  funcs.map(({ name, handler }) => console.log(name) || app.all(name, handler))
+  funcs.map(({ name, handler }) => console.log(name) || app.use(name, handler))
 
   app.get('/', (req, res) => quantor({
     title: 'Coppa Server',
